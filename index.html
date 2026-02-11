@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+<meta charset="UTF-8">
+<title>Sadece zeybikkk için 💜</title>
+
+<style>
+body{
+    margin:0;
+    height:100vh;
+    background:radial-gradient(circle at center,#200028,#000000 70%);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    font-family:'Segoe UI',sans-serif;
+    overflow:hidden;
+    color:white;
+}
+
+/* Mor sis efekti */
+body::before{
+    content:"";
+    position:absolute;
+    width:600px;
+    height:600px;
+    background:radial-gradient(circle,#8f3fff55,transparent 70%);
+    filter:blur(80px);
+    animation:fogMove 10s infinite alternate ease-in-out;
+}
+
+@keyframes fogMove{
+    from{transform:translate(-50px,-30px);}
+    to{transform:translate(50px,30px);}
+}
+
+/* Overlay */
+.overlay{
+    position:fixed;
+    width:100%;
+    height:100%;
+    backdrop-filter:blur(8px);
+    background:rgba(0,0,0,0.6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    flex-direction:column;
+    font-size:28px;
+    text-align:center;
+    z-index:10;
+    transition:1.5s;
+}
+
+.overlay button{
+    margin-top:25px;
+    padding:12px 30px;
+    border:none;
+    border-radius:30px;
+    background:#b46cff;
+    color:white;
+    font-size:16px;
+    cursor:pointer;
+    box-shadow:0 0 20px #b46cff;
+}
+
+.hidden{
+    opacity:0;
+    pointer-events:none;
+}
+
+.container{
+    text-align:center;
+    opacity:0;
+    transition:2s;
+}
+
+.container.showPage{
+    opacity:1;
+}
+
+/* Çiçek */
+.flower-wrapper{
+    width:320px;
+    height:320px;
+    transform:scale(0.5) rotate(-20deg);
+    opacity:0;
+    transition:1.5s ease;
+}
+
+.flower-wrapper.showFlower{
+    transform:scale(1) rotate(0deg);
+    opacity:1;
+    animation:pulse 2s infinite alternate;
+}
+
+@keyframes pulse{
+    from{filter:drop-shadow(0 0 15px #8f3fff);}
+    to{filter:drop-shadow(0 0 45px #d59cff);}
+}
+
+.flower-svg path{
+    transform-origin:150px 150px;
+    transform:scale(0);
+    transition:1s ease;
+    fill:url(#petalGrad);
+    filter:drop-shadow(0 0 25px #7a2bff);
+}
+
+.core{
+    opacity:0;
+    transition:1s ease;
+    filter:drop-shadow(0 0 60px #ffffff);
+}
+
+.note{
+    opacity:0;
+    margin-top:25px;
+    transition:1.5s;
+}
+
+textarea{
+    width:320px;
+    height:120px;
+    border-radius:20px;
+    border:none;
+    padding:18px;
+    background:rgba(255,255,255,0.1);
+    color:white;
+    font-size:15px;
+    resize:none;
+    backdrop-filter:blur(10px);
+}
+
+.visible{
+    opacity:1;
+}
+</style>
+</head>
+
+<body>
+
+<div class="overlay" id="overlay">
+    Sadece ZEYNEBİMEE… 💜<br>
+    <button onclick="startExperience()">Hazır mısın? ✨</button>
+</div>
+
+<div class="container" id="mainPage">
+
+<div class="flower-wrapper">
+<svg viewBox="0 0 300 300" class="flower-svg">
+
+<defs>
+<radialGradient id="coreGrad">
+  <stop offset="0%" stop-color="#ffffff"/>
+  <stop offset="100%" stop-color="#d59cff"/>
+</radialGradient>
+
+<radialGradient id="petalGrad">
+  <stop offset="0%" stop-color="#e0b3ff"/>
+  <stop offset="100%" stop-color="#7a2bff"/>
+</radialGradient>
+</defs>
+
+<g class="petals">
+
+<!-- 6 Organik Yaprak -->
+<path d="M150 50 C200 90,200 130,150 170 C100 130,100 90,150 50Z"/>
+<path d="M250 150 C210 200,170 200,130 150 C170 100,210 100,250 150Z"/>
+<path d="M150 250 C200 210,200 170,150 130 C100 170,100 210,150 250Z"/>
+<path d="M50 150 C90 200,130 200,170 150 C130 100,90 100,50 150Z"/>
+<path d="M210 90 C230 130,190 170,150 150 C170 110,190 90,210 90Z"/>
+<path d="M90 90 C70 130,110 170,150 150 C130 110,110 90,90 90Z"/>
+
+</g>
+
+<circle cx="150" cy="150" r="40" fill="url(#coreGrad)" class="core"/>
+
+</svg>
+</div>
+
+<div class="note">
+<textarea>
+ZEYNEBİMM BENİMM GÜZELL KIZIMMMM Belki seni biraz üzmüş biraz incitmiş olabilirim...
+Ama kalbimdeki yerin hep aynı seni çokkk seviyorummm bitanemm.
+Beni affeder misinnnn? 💜
+</textarea>
+</div>
+
+</div>
+
+<audio id="music" src="hanimefendi.mp3"></audio>
+
+<script>
+function startExperience(){
+    const music=document.getElementById("music");
+
+    music.play().then(()=>{
+        music.volume=0;
+        fadeInMusic(music,3000);
+    });
+
+    document.getElementById("overlay").classList.add("hidden");
+    const page=document.getElementById("mainPage");
+    page.classList.add("showPage");
+
+    setTimeout(openFlower,800);
+}
+
+function openFlower(){
+    const wrapper=document.querySelector(".flower-wrapper");
+    const petals=document.querySelectorAll(".flower-svg path");
+    const core=document.querySelector(".core");
+    const note=document.querySelector(".note");
+
+    wrapper.classList.add("showFlower");
+
+    petals.forEach((p,i)=>{
+        setTimeout(()=>{
+            p.style.transform="scale(1)";
+        },i*150);
+    });
+
+    setTimeout(()=>{core.style.opacity="1";},1000);
+    setTimeout(()=>{note.classList.add("visible");},1700);
+}
+
+function fadeInMusic(audio,duration){
+    let steps=30;
+    let stepTime=duration/steps;
+    let volumeStep=1/steps;
+    let currentStep=0;
+
+    let fade=setInterval(function(){
+        currentStep++;
+        audio.volume=Math.min(volumeStep*currentStep,1);
+        if(currentStep>=steps){
+            clearInterval(fade);
+        }
+    },stepTime);
+}
+</script>
+
+</body>
+</html>
